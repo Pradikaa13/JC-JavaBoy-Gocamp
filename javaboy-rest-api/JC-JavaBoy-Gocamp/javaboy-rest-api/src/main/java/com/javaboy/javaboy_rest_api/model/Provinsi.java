@@ -13,16 +13,22 @@ Version 1.0
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "provinsi")
+@Table(name = "provinsi") // Nama tabel di database
+
 public class Provinsi {
     @Id
+    // Karena id di Laravel bisa jadi bukan auto-increment,
+    // kita asumsikan di sini bisa diset secara manual atau tetap auto-increment
+    // Jika manual, hilangkan @GeneratedValue
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String namaProvinsi;
+    private String namaProvinsi; // Menggunakan camelCase untuk Java
 
-    // Getters and setters
+    public Provinsi() {
+    }
 
+    // Getter dan Setter
     public Long getId() {
         return id;
     }

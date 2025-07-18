@@ -11,8 +11,6 @@ Created on 16/07/2025 0:31
 Version 1.0
 */
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 
 @Entity
 @Table(name = "products") // Nama tabel di database
@@ -24,16 +22,15 @@ public class Product {
     private String productName;
     private String productDescription;
     private String photo;
-    private Double price;
+    private Double price; // Menggunakan Double untuk harga
     private String category1;
     private String category2;
-    private Integer stock;
+    private Integer stock; // Menggunakan Integer untuk stok
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    public Product() {
+    }
 
-    // Getters and setters
-
+    // Getter dan Setter
     public Long getId() {
         return id;
     }
@@ -96,21 +93,5 @@ public class Product {
 
     public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

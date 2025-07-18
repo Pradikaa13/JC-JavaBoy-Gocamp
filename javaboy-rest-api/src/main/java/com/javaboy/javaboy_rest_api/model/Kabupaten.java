@@ -21,20 +21,14 @@ public class Kabupaten {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "provinsi_id")
-    private Long provinsiId; // Foreign key
+    private String namaKabupaten;
 
-    private String namaKabupaten; // Menggunakan camelCase untuk Java
+    @ManyToOne
+    @JoinColumn(name = "provinsi_id")
+    private Provinsi provinsi;
 
-    // Relasi ke Provinsi (jika Anda akan menggunakannya)
-    // @ManyToOne
-    // @JoinColumn(name = "provinsi_id", insertable = false, updatable = false)
-    // private Provinsi provinsi;
+    // Getters and setters
 
-    public Kabupaten() {
-    }
-
-    // Getter dan Setter
     public Long getId() {
         return id;
     }
@@ -43,19 +37,19 @@ public class Kabupaten {
         this.id = id;
     }
 
-    public Long getProvinsiId() {
-        return provinsiId;
-    }
-
-    public void setProvinsiId(Long provinsiId) {
-        this.provinsiId = provinsiId;
-    }
-
     public String getNamaKabupaten() {
         return namaKabupaten;
     }
 
     public void setNamaKabupaten(String namaKabupaten) {
         this.namaKabupaten = namaKabupaten;
+    }
+
+    public Provinsi getProvinsi() {
+        return provinsi;
+    }
+
+    public void setProvinsi(Provinsi provinsi) {
+        this.provinsi = provinsi;
     }
 }

@@ -12,38 +12,44 @@ Version 1.0
 */
 import jakarta.persistence.*;
 import java.util.Date;
-import java.time.LocalDateTime;
-
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders") // Nama tabel di database
+
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
+    private Long userId; // Foreign key
+
+    @Column(name = "product_id")
+    private Long productId; // Foreign key
+
+    private String status; // Misalnya: 'pending', 'approved', 'returned'
     private String productName;
-    private String status;
     private Integer quantity;
-    private LocalDateTime borrowDate;
-    private LocalDateTime returnDate;
+
+    @Temporal(TemporalType.DATE) // Hanya menyimpan tanggal
+    private Date borrowDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date returnDate;
+
     private Double price;
     private Double penalty;
     private Double totalPrice;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
+    // Relasi ke User (seperti di Laravel)
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false) // user_id adalah FK
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    public Order() {
+    }
 
-    // Getters and setters
-
+    // Getter dan Setter
     public Long getId() {
         return id;
     }
@@ -52,12 +58,20 @@ public class Order {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getStatus() {
@@ -68,6 +82,14 @@ public class Order {
         this.status = status;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -76,19 +98,19 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(LocalDateTime borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public LocalDateTime getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDateTime returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -116,35 +138,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 }

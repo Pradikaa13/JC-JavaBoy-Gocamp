@@ -6,23 +6,27 @@ IntelliJ IDEA 2025.1.2 (Ultimate Edition)
 Build #IU-251.26094.121, built on June 3, 2025
 @Author lenovo Achmadi Suryo Utomo
 Java Developer
-Created on 16/07/2025 0:41
-@Last Modified 16/07/2025 0:41
+Created on 16/07/2025 0:43
+@Last Modified 16/07/2025 0:43
 Version 1.0
 */
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "provinsi")
-public class Provinsi {
+@Table(name = "agama") // Nama tabel di database
+
+public class Agama {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String namaProvinsi;
+    private String namaAgama; // Menggunakan camelCase untuk Java
 
-    // Getters and setters
+    public Agama() {
+    }
 
+    // Getter dan Setter
     public Long getId() {
         return id;
     }
@@ -31,11 +35,11 @@ public class Provinsi {
         this.id = id;
     }
 
-    public String getNamaProvinsi() {
-        return namaProvinsi;
+    public String getNamaAgama() {
+        return namaAgama;
     }
 
-    public void setNamaProvinsi(String namaProvinsi) {
-        this.namaProvinsi = namaProvinsi;
+    public void setNamaAgama(String namaAgama) {
+        this.namaAgama = namaAgama;
     }
 }
