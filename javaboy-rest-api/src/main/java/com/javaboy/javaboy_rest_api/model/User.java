@@ -19,25 +19,30 @@ import java.util.Date; // Untuk tipe data Date
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Umumnya menggunakan Long untuk ID
+    private Long id;
 
     private String name;
     private String email;
-    private String password; // Pastikan ini di-hash sebelum disimpan
-    private String noHp; // Menggunakan camelCase untuk Java
+    private String password;
+
+    @Column(name = "no_hp")
+    private String noHp;
+
+    @Column(name = "email_verified_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date emailVerifiedAt;
 
     @Column(name = "provinsi_id")
-    private Long provinsiId; // Foreign key
+    private Long provinsiId;
 
     @Column(name = "kabupaten_id")
-    private Long kabupatenId; // Foreign key
+    private Long kabupatenId;
 
-    @Column(name = "agama_id")
-    private Long agamaId; // Foreign key
+    private String usertype;
 
-    private String usertype; // 'user', 'admin', dll.
+    @Column(name = "remember_token")
+    private String rememberToken;
 
-    // Jika ingin menyimpan timestamp otomatis
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -46,26 +51,19 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Relasi ke Provinsi (jika Anda akan menggunakannya)
-    // @ManyToOne
-    // @JoinColumn(name = "provinsi_id", insertable = false, updatable = false)
-    // private Provinsi provinsi;
+    // Relasi ke Provinsi
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provinsi_id", insertable = false, updatable = false)
+    private Provinsi provinsi;
 
-    // Relasi ke Kabupaten (jika Anda akan menggunakannya)
-    // @ManyToOne
-    // @JoinColumn(name = "kabupaten_id", insertable = false, updatable = false)
-    // private Kabupaten kabupaten;
+    // Relasi ke Kabupaten
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kabupaten_id", insertable = false, updatable = false)
+    private Kabupaten kabupaten;
 
-    // Relasi ke Agama (jika Anda akan menggunakannya)
-    // @ManyToOne
-    // @JoinColumn(name = "agama_id", insertable = false, updatable = false)
-    // private Agama agama;
+    public User() {}
 
-    // Konstruktor (opsional, tapi disarankan)
-    public User() {
-    }
-
-    // Getter dan Setter untuk semua field
+    // Getter dan Setter
     public Long getId() {
         return id;
     }
@@ -106,6 +104,14 @@ public class User {
         this.noHp = noHp;
     }
 
+    public Date getEmailVerifiedAt() {
+        return emailVerifiedAt;
+    }
+
+    public void setEmailVerifiedAt(Date emailVerifiedAt) {
+        this.emailVerifiedAt = emailVerifiedAt;
+    }
+
     public Long getProvinsiId() {
         return provinsiId;
     }
@@ -122,20 +128,20 @@ public class User {
         this.kabupatenId = kabupatenId;
     }
 
-    public Long getAgamaId() {
-        return agamaId;
-    }
-
-    public void setAgamaId(Long agamaId) {
-        this.agamaId = agamaId;
-    }
-
     public String getUsertype() {
         return usertype;
     }
 
     public void setUsertype(String usertype) {
         this.usertype = usertype;
+    }
+
+    public String getRememberToken() {
+        return rememberToken;
+    }
+
+    public void setRememberToken(String rememberToken) {
+        this.rememberToken = rememberToken;
     }
 
     public Date getCreatedAt() {
@@ -154,7 +160,22 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    // Callback untuk otomatis mengisi createdAt dan updatedAt
+    public Provinsi getProvinsi() {
+        return provinsi;
+    }
+
+    public void setProvinsi(Provinsi provinsi) {
+        this.provinsi = provinsi;
+    }
+
+    public Kabupaten getKabupaten() {
+        return kabupaten;
+    }
+
+    public void setKabupaten(Kabupaten kabupaten) {
+        this.kabupaten = kabupaten;
+    }
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();
